@@ -1,0 +1,94 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Requests</title>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+
+<body>
+<div class="row">
+    <!--    Error-->
+    <div th:if="${param.error}">
+        <div class="alert alert-danger">Post not written by you.
+        </div>
+    </div>
+    <!--        Error-->
+    <div class="container">
+        <a class="btn btn-primary" th:href="@{/addPost}" role="button">Add New Post</a>
+        <a class="btn btn-primary" th:href="@{/home/sortDesc}" role="button">SortByTime</a>
+        <a class="btn btn-primary" th:href="@{/home}" role="button">Back to home</a>
+        <a class="btn btn-secondary float-right" th:href="@{/login}" role="button">Login</a>
+        <div>&nbsp</div>
+        <hr>
+        <!----        Filter   ----->
+        <form th:action="@{/filter}" method="post">
+            <h6>Authors</h6>
+            <div th:each="name: ${distinctAuthorName}" class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" name="author" th:value="${name}">
+                <label class="form-check-label" th:text="${name}"></label>
+            </div>
+            <div>&nbsp</div>
+            <h6>Tags</h6>
+            <div th:each="name: ${distinctAuthorTag}" class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" name="tag" th:value="${name}">
+                <label class="form-check-label" th:text="${name}"></label>
+            </div>
+            <div>&nbsp</div>
+            <h6>Published Date</h6>
+            <div class="form-check form-check-inline">
+                <label>Start date: &nbsp</label>
+                <input type="date" name="startDate" th:value="${startDate}">
+            </div>
+            <div class="form-check form-check-inline">
+                <label>End date: &nbsp</label>
+                <input type="date" name="endDate" th:value="${endDate}">
+            </div>
+            <br>
+            <div>&nbsp</div>
+            <input type="submit" class="btn btn-dark" value="Filter">
+        </form>
+        <!--        Filter End    -->
+        <hr>
+        <form th:action="@{/home/search}" method="get">
+            <div>
+                <input type="text" class="form-control" placeholder="Search here...." name="tagss"/>
+                <input type="submit" class="btn btn-dark" value="search">
+                </input>
+            </div>
+        </form>
+        <h3 class="text-center">Blog Application</h3>
+        <form action="dashboard" method="get">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Author</th>
+                    <th>Title</th>
+                    <th>Excerpt</th>
+                    <th>PublishedAt</th>
+                    <th>Tags</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="post: ${posts}">
+                    <td th:text="${post.author}"></td>
+                    <td th:text="${post.title}"></td>
+                    <td th:text="${post.excerpt}"></td>
+                    <td th:text="${post.publishedAt}"></td>
+                    <td>
+                        <div th:each="tag:${post.tags}">
+                            <p th:text="${tag.name}"></p>
+                        </div>
+                    </td>
+                    <td><a th:href="@{/updatePost/{id}(id=${post.id})}" class="btn btn-secondary">Update</a>
+                        <a th:href="@{/deletePost/{id}(id=${post.id})}" class="btn btn-danger">Delete</a>
+                        <a th:href="@{/showPost/{id}(id=${post.id})}" class="btn btn-info">Show Post</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>
+</body>
+</html>

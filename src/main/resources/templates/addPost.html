@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+body {font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: border-box;}
+
+input[type=text], select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  resize: vertical;
+}
+
+input[type=submit] {
+  background-color: #04AA6D;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+.container {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+
+
+    </style>
+</head>
+<body>
+
+<a class="btn btn-primary" th:href="@{/home}" role="button">Back to home</a>
+
+<h3>Add Post</h3>
+
+<div class="container">
+    <form action="#" th:action="@{/newPost}"
+          th:object="${post}" method="post">
+
+        <!--        <div sec:authorize="hasRole('admin')">-->
+        <!--            <label>Author</label>-->
+        <!--            <input type="text" th:field="*{author}" placeholder="Author name">-->
+        <!--        </div>-->
+
+        <label>Title</label>
+        <input type="text" th:field="*{title}" placeholder="Title">
+
+        <label>Excerpt</label>
+        <input type="text" th:field="*{excerpt}" placeholder="Write short description.....">
+
+        <label>Content</label>
+        <textarea th:field="*{content}" placeholder="Write something here....." style="height:200px"></textarea>
+
+        <label>Tags</label>
+        <input type="text" name="allTags"/>
+
+        <input type="submit" value="Save">
+    </form>
+</div>
+
+</body>
+</html>
